@@ -54,7 +54,7 @@
                             </ul>
                         </div>
                         <ul class="list-group list-group-flush text-left">
-                            <li class="list-group-item" v-for="item in todos">
+                            <li class="list-group-item" v-for="(item,key) in todos">
                                 <div class="d-flex">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" v-model="item.completed"
@@ -63,12 +63,13 @@
                                             {{ item.title }}
                                         </label>
                                     </div>
-                                    <button type="button" class="close ml-auto" aria-label="Close">
+                                    <button type="button" class="close ml-auto" @click="removeTodo(key)"
+                                        aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                             </li>
-                            <li class="list-group-item">
+                            <!-- <li class="list-group-item">
                                 <div class="d-flex">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" id="a1">
@@ -80,7 +81,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                            </li>
+                            </li> -->
                             <li class="list-group-item">
                                 <input type="text" class="form-control">
                             </li>
@@ -127,6 +128,12 @@
                                 })
 
                                 this.newTodo = ''
+                            },
+                            removeTodo: function (key) {
+                                // 因為點下刪除的叉叉不知道是哪個叉叉，因此要將相關的參數傳入
+                                // 會splice會根據array裡面的index(key)去刪東西
+                                this.todos.splice(key, 1)
+
                             }
                         }
                     });
