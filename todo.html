@@ -112,7 +112,12 @@
                                 var value = this.newTodo
                                 // 把時間轉為數字
                                 var timestamp = Math.floor(Date.now())
-                                console.log(value, timestamp)
+                                // console.log(value, timestamp)
+                                // 如果新增的代辦事項是空的，就不要顯示
+
+                                if (!value) {
+                                    return
+                                }
                                 // 新增物件到todos裡面
                                 this.todos.push({
                                     id: timestamp,
