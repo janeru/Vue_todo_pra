@@ -109,7 +109,8 @@
                         methods: {
                             // 用來新增有哪些待辦事項
                             addTodo: function () {
-                                var value = this.newTodo
+                                // trim的方法是將多餘的空白清掉
+                                var value = this.newTodo.trim()
                                 // 把時間轉為數字
                                 var timestamp = Math.floor(Date.now())
                                 // console.log(value, timestamp)
