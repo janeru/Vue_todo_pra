@@ -43,13 +43,18 @@
                         <div class="card-header">
                             <ul class="nav nav-tabs card-header-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#">全部</a>
+                                    <!--  active若是在visibility為某個參數的情況，那麼就是啟動的狀態-->
+                                    <!--  利用點擊事件來控制visibility的值-->
+                                    <a class="nav-link" :class="{'active':visibility=='all'}" @click="visibility='all'"
+                                        href="#">全部</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link " href="#">進行中</a>
+                                    <a class="nav-link" :class="{'active':visibility=='active'}"
+                                        @click="visibility='active'" href="#">進行中</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">已完成</a>
+                                    <a class="nav-link" :class="{'active':visibility=='completed'}"
+                                        @click="visibility='completed'" href="#">已完成</a>
                                 </li>
                             </ul>
                         </div>
@@ -106,7 +111,8 @@
                                 title: '你好',
                                 completed: false
 
-                            }]
+                            }],
+                            visibility: 'all'
                         },
                         methods: {
                             // 用來新增有哪些待辦事項
