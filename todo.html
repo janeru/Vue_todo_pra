@@ -86,11 +86,11 @@
                             </li> -->
                         </ul>
                         <div class="card-footer d-flex justify-content-between">
-                            <span v-if="notCompleted">
+                            <span v-if="notCompleted !== 0">
                                 還有{{notCompleted}}筆任務未完成
                             </span>
-                            <span v-if="!notCompleted">
-                                目前尚未有代辦事項清單
+                            <span v-if="notCompleted === 0">
+                                目前尚未有代辦事項
                             </span>
                             <a @click="clearAllTodos" href="#">清除所有任務</a>
                         </div>
