@@ -86,10 +86,16 @@
                             </li> -->
                         </ul>
                         <div class="card-footer d-flex justify-content-between">
-                            <span>還有 3 筆任務未完成</span>
-                            <a href="#">清除所有任務</a>
+                            <span v-if="notCompleted">
+                                還有{{notCompleted}}筆任務未完成
+                            </span>
+                            <span v-if="!notCompleted">
+                                目前尚未有代辦事項清單
+                            </span>
+                            <a @click="clearAllTodos" href="#">清除所有任務</a>
                         </div>
                     </div>
+
                 </div>
 
                 <script>
@@ -99,17 +105,19 @@
                             // 使用newTodo來新增待辦事項
                             newTodo: '',
                             // 是一個陣列，用來呈現目前待辦事項有哪些內容
-                            todos: [{
-                                id: '1',
-                                title: '你好',
-                                completed: false
-
-                            }],
+                            todos: [
+                                // {
+                                // id: '1',
+                                // title: '你好',
+                                // completed: false}
+                            ],
                             // 暫時存放todo的地方
                             cacheTodo: {},
                             // 編輯標題時預存的地方
                             cacheTitle: {},
-                            visibility: 'all'
+                            visibility: 'all',
+                            // 存放尚未做好的代辦事項的數量
+                            notNum: 0
                         },
                         methods: {
                             // 用來新增有哪些待辦事項
@@ -148,6 +156,7 @@
                                 // })
                                 // 寫法2
                                 var vm = this
+                                console.log(this)
                                 var newIndex = vm.todos.findIndex(function (item, key) {
                                     return todo.id === item.id
 
@@ -173,6 +182,10 @@
                                 item.title = this.cacheTitle
                                 this.cacheTitle = ''
                                 this.cacheTodo = ''
+                            },
+                            // 清除所有任務
+                            clearAllTodos: function () {
+                                this.todos = []
                             }
 
                         },
@@ -202,6 +215,16 @@
                                     })
                                     return newTodos
                                 }
+
+                            },
+                            notCompleted: function () {
+                                let notArr = []
+                                this.todos.map((item) => {
+                                    if (!item.completed) {
+                                        notArr.push(item)
+                                    }
+                                })
+                                return notArr.length
 
                             }
                         }
