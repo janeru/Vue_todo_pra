@@ -59,8 +59,8 @@
                             </ul>
                         </div>
                         <ul class="list-group list-group-flush text-left">
-                            <li class="list-group-item" v-for="(item,key) in filteredTodos">
-                                <div class="d-flex">
+                            <li class="list-group-item" v-for="(item,key) in filteredTodos" @dblclick="editTodo(item)">
+                                <div class="d-flex" v-if="item.id !== cacheTodo.id">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" v-model="item.completed"
                                             :id="item.id">
@@ -74,23 +74,13 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
+                                <input type="text" class="form-control" v-if="item.id === cacheTodo.id">
                             </li>
+
+
                             <!-- <li class="list-group-item">
-                                <div class="d-flex">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="a1">
-                                        <label class="form-check-label completed" for="a1">
-                                            Cras justo odio
-                                        </label>
-                                    </div>
-                                    <button type="button" class="close ml-auto" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            </li> -->
-                            <li class="list-group-item">
                                 <input type="text" class="form-control">
-                            </li>
+                            </li> -->
                         </ul>
                         <div class="card-footer d-flex justify-content-between">
                             <span>還有 3 筆任務未完成</span>
@@ -112,6 +102,10 @@
                                 completed: false
 
                             }],
+                            // 暫時存放todo的地方
+                            cacheTodo: {},
+                            // 編輯標題時預存的地方
+                            cacheTitle: {},
                             visibility: 'all'
                         },
                         methods: {
@@ -140,6 +134,14 @@
                                 // 因為點下刪除的叉叉不知道是哪個叉叉，因此要將相關的參數傳入
                                 // 會splice會根據array裡面的index(key)去刪東西
                                 this.todos.splice(key, 1)
+
+                            },
+                            // 點擊兩下去修改代辦事項清單
+                            editTodo: function (item) {
+                                console.log(item)
+                                // 先將目前正在編輯的資料存放起來
+                                this.cacheTodo = item
+                                this.cacheTitle = item.title
 
                             }
                         },
