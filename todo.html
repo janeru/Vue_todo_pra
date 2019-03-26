@@ -74,7 +74,10 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <input type="text" class="form-control" v-if="item.id === cacheTodo.id">
+                                <!-- v-model就是預存的資料內容 -->
+                                <!-- 按下取消內容esc就是取消編輯 -->
+                                <input type="text" class="form-control" v-model="cacheTitle" @keyup.esc="cancelEdit"
+                                    @keyup.enter="doneEdit(item)" v-if="item.id === cacheTodo.id">
                             </li>
 
 
@@ -143,7 +146,18 @@
                                 this.cacheTodo = item
                                 this.cacheTitle = item.title
 
+                            },
+                            // 取消編輯
+                            cancelEdit: function () {
+                                this.cacheTodo = {}
+                            },
+                            // 編輯完成
+                            doneEdit: function (item) {
+                                item.title = this.cacheTitle
+                                this.cacheTitle = ''
+                                this.cacheTodo = ''
                             }
+
                         },
                         // 利用computed的方法來過濾tab資料，使得tab內頁可以對應到正確的內容
                         computed: {
